@@ -11,6 +11,8 @@ public class StudentData {
     private final StringProperty email;
     private final StringProperty DOB;
 
+
+
     public StudentData(String ID, String firstname, String lastname, String email, String DOB) {
         this.ID=new SimpleStringProperty(ID);
         this.firstName=new SimpleStringProperty(firstname);
@@ -19,6 +21,8 @@ public class StudentData {
         this.DOB=new SimpleStringProperty(DOB);
 
     }
+
+
 
     public String getID() {
         return ID.get();

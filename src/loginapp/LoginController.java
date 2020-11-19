@@ -102,4 +102,24 @@ public class LoginController implements Initializable {
         }
 
     }
+
+    public void bypassLogin(ActionEvent actionEvent) {
+        try {
+            Stage stage = (Stage) this.loginbutton.getScene().getWindow();
+            stage.close();
+            Stage adminStage = new Stage();
+            FXMLLoader adminLoader = new FXMLLoader();
+            Pane adminRoot = (Pane) adminLoader.load(getClass().getResource("/admins/admins.fxml").openStream());
+            AdminsController adminsController = (AdminsController) adminLoader.getController();
+
+            Scene scene = new Scene(adminRoot);
+            adminStage.setScene(scene);
+            adminStage.setTitle("Admin Dashboard");
+            adminStage.setResizable(false);
+            adminStage.show();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

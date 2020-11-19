@@ -1,16 +1,23 @@
 package admins;
 
+import information.InformationController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import dbUtil.dbConnection;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
+import javax.sound.sampled.Port;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,14 +37,46 @@ public class AdminsController implements Initializable {
     public TableColumn<StudentData, String> lastnamecolumn;
     public TableColumn<StudentData, String> emailcolumn;
     public TableColumn<StudentData, String> dobcolumn;
+
+    public TableView<PortfolioData> _studenttable;
+    public TableColumn<PortfolioData, String> _gradecolumn;
+    public TableColumn<PortfolioData, String> _coursecolumn;
+    public TableColumn<PortfolioData, String> _namecolumn;
+    public TableColumn<PortfolioData, String> _idcolumn;
+
     private dbConnection dc;
     private ObservableList<StudentData> data;
+    private ObservableList<PortfolioData> portfolioData;
 
     private String sql = "SELECT * FROM students";
+    private String sqlGradeData = "SELECT * FROM GRADE";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.dc=new dbConnection();
+        loadAllData();
+    }
+
+    public void loadAllData() {
+        try {
+            Connection conn = dbConnection.getConnection();
+            this.portfolioData = FXCollections.observableArrayList();
+
+            ResultSet rs = conn.createStatement().executeQuery(sqlGradeData);
+            while (rs.next()) {
+                this.portfolioData.add(new PortfolioData(rs.getString(4), rs.getString(3),
+                        rs.getString(1) + " " + rs.getString(2), rs.getString(5)));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        this._idcolumn.setCellValueFactory(new PropertyValueFactory<PortfolioData, String>("ID"));
+        this._namecolumn.setCellValueFactory(new PropertyValueFactory<PortfolioData, String>("Name"));
+        this._coursecolumn.setCellValueFactory(new PropertyValueFactory<PortfolioData, String>("Course"));
+        this._gradecolumn.setCellValueFactory(new PropertyValueFactory<PortfolioData, String>("Grade"));
+
+        this._studenttable.setItems(null);
+        this._studenttable.setItems(this.portfolioData);
     }
 
     public void loadStudentData(ActionEvent event) {
@@ -92,5 +131,39 @@ public class AdminsController implements Initializable {
         this.email.setText("");
         this.dob.setValue(null);
 
+    }
+
+    public void moreInformation(ActionEvent actionEvent) {
+        //String sqlInsert = "INSERT INTO students(id,fname,lname,email,DOB) VALUES (?,?,?,?,?)";
+        String sqlSelection = "SELECT * from Student WHERE ID = ?";
+        //System.out.println(this._studenttable.getSelectionModel().getSelectedItem().getID());
+
+        try {
+            Connection conn = dbConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sqlSelection);
+            stmt.setString(1, this._studenttable.getSelectionModel().getSelectedItem().getID());
+
+            ResultSet rs = conn.createStatement().executeQuery(sqlSelection);
+            while (rs.next()) {
+                System.out.println(rs.getString(4));
+            }
+
+
+            conn.close();
+
+            Stage informationStage = new Stage();
+            FXMLLoader informationLoader = new FXMLLoader();
+            Pane informationRoot = (Pane) informationLoader.load(getClass().getResource("/information/information.fxml").openStream());
+            InformationController informationController = (InformationController) informationLoader.getController();
+
+            Scene scene = new Scene(informationRoot);
+            informationStage.setScene(scene);
+            informationStage.setTitle("Student information");
+            informationStage.setResizable(false);
+            informationStage.show();
+
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
     }
 }
