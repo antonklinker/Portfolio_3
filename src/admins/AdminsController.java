@@ -49,8 +49,8 @@ public class AdminsController implements Initializable {
     private ObservableList<PortfolioData> portfolioData;
 
     private String sql = "SELECT * FROM students";
-    private String sqlGradeData = "SELECT * FROM GRADE";
-
+    //private String sqlGradeData = "SELECT * FROM GRADE";
+    private String sqlStudentData = "SELECT * FROM Student";
 
     private static String IDpass;
 
@@ -65,11 +65,15 @@ public class AdminsController implements Initializable {
             Connection conn = dbConnection.getConnection();
             this.portfolioData = FXCollections.observableArrayList();
 
-            ResultSet rs = conn.createStatement().executeQuery(sqlGradeData);
-            while (rs.next()) {
+            //ResultSet rs = conn.createStatement().executeQuery(sqlGradeData);
+            ResultSet rs2 = conn.createStatement().executeQuery(sqlStudentData);
+            while (rs2.next()) {
+                this.portfolioData.add(new PortfolioData(rs2.getString(3), rs2.getString(1), null, null, null));
+            }
+            /*while (rs.next()) {
                 this.portfolioData.add(new PortfolioData(rs.getString(4), rs.getString(3),
                         rs.getString(1) + " " + rs.getString(2), rs.getString(5), null));
-            }
+            }*/
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
