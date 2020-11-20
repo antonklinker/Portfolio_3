@@ -66,7 +66,7 @@ public class AdminsController implements Initializable {
             //ResultSet rs = conn.createStatement().executeQuery(sqlGradeData);
             ResultSet rs2 = conn.createStatement().executeQuery(sqlStudentData);
             while (rs2.next()) {
-                this.portfolioData.add(new PortfolioData(rs2.getString(3), rs2.getString(1), null, null, null));
+                this.portfolioData.add(new PortfolioData(rs2.getString(3), rs2.getString(1), null, null, null, null));
             }
             /*while (rs.next()) {
                 this.portfolioData.add(new PortfolioData(rs.getString(4), rs.getString(3),

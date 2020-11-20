@@ -52,14 +52,15 @@ public class InformationController implements Initializable {
 
 
             ResultSet rs = conn.createStatement().executeQuery(sql);
+            ResultSet rs2 = conn.createStatement().executeQuery(sql2);
 
             int i = 0;
             while (rs.next()) {
                 if (i == 0) {
-                    this.portfolioData.add(new PortfolioData(rs.getString(1), rs.getString(2), rs.getString(4) + " " + rs.getString(5), rs.getString(6), rs.getString(3)));
+                    this.portfolioData.add(new PortfolioData(rs.getString(1), rs.getString(2), rs.getString(4) + " " + rs.getString(5), rs.getString(6), rs.getString(3), rs2.getString(1)));
                     i++;
                 } else {
-                    this.portfolioData.add(new PortfolioData("", "", rs.getString(4) + " " + rs.getString(5), rs.getString(6), ""));
+                    this.portfolioData.add(new PortfolioData(null, null, rs.getString(4) + " " + rs.getString(5), rs.getString(6), null, null));
                 }
             }
 
@@ -74,7 +75,7 @@ public class InformationController implements Initializable {
         this.poocolumn.setCellValueFactory(new PropertyValueFactory<PortfolioData, String>("City"));
         this.coursescolumn.setCellValueFactory(new PropertyValueFactory<PortfolioData, String>("Course"));
         this.gradecolumn.setCellValueFactory(new PropertyValueFactory<PortfolioData, String>("Grade"));
-        //this.averagecolumn.setCellValueFactory(new PropertyValueFactory<PortfolioData, String>("Average"));
+        this.averagecolumn.setCellValueFactory(new PropertyValueFactory<PortfolioData, String>("Avg"));
 
         this.studenttable.setItems(null);
         this.studenttable.setItems(this.portfolioData);

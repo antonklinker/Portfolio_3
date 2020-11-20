@@ -9,13 +9,15 @@ public class PortfolioData {
     private final StringProperty course;
     private final StringProperty grade;
     private final StringProperty city;
+    private final StringProperty avg;
 
-    public PortfolioData(String ID, String name, String course, String grade, String city) {
+    public PortfolioData(String ID, String name, String course, String grade, String city, String avg) {
         this.ID=new SimpleStringProperty(ID);
         this.name=new SimpleStringProperty(name);
         this.course=new SimpleStringProperty(course);
         this.grade=new SimpleStringProperty(grade);
         this.city=new SimpleStringProperty(city);
+        this.avg=new SimpleStringProperty(avg);
     }
 
 
@@ -79,5 +81,17 @@ public class PortfolioData {
 
     public void setCity(String city) {
         this.city.set(city);
+    }
+
+    public String getAvg() {
+        return avg.get();
+    }
+
+    public StringProperty avgProperty() {
+        return avg;
+    }
+
+    public void setAvg(String avg) {
+        this.avg.set(avg);
     }
 }
