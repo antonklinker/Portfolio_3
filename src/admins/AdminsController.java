@@ -39,8 +39,6 @@ public class AdminsController implements Initializable {
     public TableColumn<StudentData, String> dobcolumn;
 
     public TableView<PortfolioData> _studenttable;
-    public TableColumn<PortfolioData, String> _gradecolumn;
-    public TableColumn<PortfolioData, String> _coursecolumn;
     public TableColumn<PortfolioData, String> _namecolumn;
     public TableColumn<PortfolioData, String> _idcolumn;
 
@@ -79,8 +77,6 @@ public class AdminsController implements Initializable {
         }
         this._idcolumn.setCellValueFactory(new PropertyValueFactory<PortfolioData, String>("ID"));
         this._namecolumn.setCellValueFactory(new PropertyValueFactory<PortfolioData, String>("Name"));
-        this._coursecolumn.setCellValueFactory(new PropertyValueFactory<PortfolioData, String>("Course"));
-        this._gradecolumn.setCellValueFactory(new PropertyValueFactory<PortfolioData, String>("Grade"));
 
         this._studenttable.setItems(null);
         this._studenttable.setItems(this.portfolioData);
