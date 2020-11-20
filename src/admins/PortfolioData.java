@@ -8,7 +8,7 @@ public class PortfolioData {
     private final StringProperty name;
     private final StringProperty course;
     private final StringProperty grade;
-    /*private final StringProperty city;
+    private final StringProperty city;
 
     public PortfolioData(String ID, String name, String course, String grade, String city) {
         this.ID=new SimpleStringProperty(ID);
@@ -16,15 +16,9 @@ public class PortfolioData {
         this.course=new SimpleStringProperty(course);
         this.grade=new SimpleStringProperty(grade);
         this.city=new SimpleStringProperty(city);
-    }*/
-
-
-    public PortfolioData(String ID, String name, String course, String grade) {
-        this.ID=new SimpleStringProperty(ID);
-        this.name=new SimpleStringProperty(name);
-        this.course=new SimpleStringProperty(course);
-        this.grade=new SimpleStringProperty(grade);
     }
+
+
 
 
     public String getID() {
@@ -73,5 +67,17 @@ public class PortfolioData {
 
     public void setGrade(String grade) {
         this.grade.set(grade);
+    }
+
+    public String getCity() {
+        return city.get();
+    }
+
+    public StringProperty cityProperty() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city.set(city);
     }
 }

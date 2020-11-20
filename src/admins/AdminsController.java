@@ -51,6 +51,9 @@ public class AdminsController implements Initializable {
     private String sql = "SELECT * FROM students";
     private String sqlGradeData = "SELECT * FROM GRADE";
 
+
+    private static String IDpass;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.dc=new dbConnection();
@@ -65,7 +68,7 @@ public class AdminsController implements Initializable {
             ResultSet rs = conn.createStatement().executeQuery(sqlGradeData);
             while (rs.next()) {
                 this.portfolioData.add(new PortfolioData(rs.getString(4), rs.getString(3),
-                        rs.getString(1) + " " + rs.getString(2), rs.getString(5)));
+                        rs.getString(1) + " " + rs.getString(2), rs.getString(5), null));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -142,11 +145,12 @@ public class AdminsController implements Initializable {
             Connection conn = dbConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sqlSelection);
             stmt.setString(1, this._studenttable.getSelectionModel().getSelectedItem().getID());
+            setIDpass(this._studenttable.getSelectionModel().getSelectedItem().getID());
 
-            ResultSet rs = conn.createStatement().executeQuery(sqlSelection);
-            while (rs.next()) {
-                System.out.println(rs.getString(4));
-            }
+            //ResultSet rs = conn.createStatement().executeQuery(sqlSelection);
+            //while (rs.next()) {
+                //System.out.println(rs.getString(4));
+            //}
 
 
             conn.close();
@@ -165,5 +169,13 @@ public class AdminsController implements Initializable {
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setIDpass(String ID) {
+        this.IDpass=ID;
+    }
+
+    public static String getIDpass() {
+        return IDpass;
     }
 }

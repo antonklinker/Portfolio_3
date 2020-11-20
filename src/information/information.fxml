@@ -14,9 +14,10 @@
               <columns>
                 <TableColumn fx:id="idcolumn" prefWidth="35.0" text="ID" />
                 <TableColumn fx:id="namecolumn" prefWidth="111.0" text="Name" />
-                  <TableColumn fx:id="poocolumn" prefWidth="178.0" text="Place of origin" />
-                  <TableColumn fx:id="coursescolumn" prefWidth="160.0" text="Courses taken" />
-                  <TableColumn fx:id="gradecolumn" prefWidth="114.0" text="Grade" />
+                  <TableColumn fx:id="poocolumn" prefWidth="106.0" text="Place of origin" />
+                  <TableColumn fx:id="coursescolumn" prefWidth="146.0" text="Courses taken" />
+                  <TableColumn fx:id="gradecolumn" prefWidth="106.0" text="Grade" />
+                  <TableColumn fx:id="averagecolumn" prefWidth="95.0" text="Average" />
               </columns>
             </TableView>
          </children>
