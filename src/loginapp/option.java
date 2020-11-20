@@ -1,6 +1,7 @@
 package loginapp;
 
 public enum option {
+    // Creates options for the combobox used to login
     Admin , Student;
 
     private option() {

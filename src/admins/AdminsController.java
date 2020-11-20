@@ -39,6 +39,7 @@ public class AdminsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Established connection to the database and calls loadAllData()
         this.dc=new dbConnection();
         loadAllData();
     }
@@ -48,14 +49,18 @@ public class AdminsController implements Initializable {
             Connection conn = dbConnection.getConnection();
             this.portfolioData = FXCollections.observableArrayList();
 
+            // Executes the SQL-query sqlStudentData and adds all the data to the ObservableList portfolioData
             ResultSet rs2 = conn.createStatement().executeQuery(sqlStudentData);
             while (rs2.next()) {
+                // The reasoning behind setting course, grade, city and avg to null is
+                // so we can use the same constructor without retrieving irrelevant data
                 this.portfolioData.add(new PortfolioData(rs2.getString(3), rs2.getString(1), null, null, null, null));
             }
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        // adds the portfolioData to the relevanct columns
         this._idcolumn.setCellValueFactory(new PropertyValueFactory<PortfolioData, String>("ID"));
         this._namecolumn.setCellValueFactory(new PropertyValueFactory<PortfolioData, String>("Name"));
 
@@ -67,7 +72,8 @@ public class AdminsController implements Initializable {
 
     public void moreInformation(ActionEvent actionEvent) {
         String sqlSelection = "SELECT * from Student WHERE ID = ?";
-
+            // Checks what student is selected and opens a new window with more information about the student
+            // -> Go to information controller
         try {
             if (this._studenttable.getSelectionModel().getSelectedItem()!=null) {
                 Connection conn = dbConnection.getConnection();

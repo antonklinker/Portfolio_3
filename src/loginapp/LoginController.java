@@ -28,6 +28,7 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Checks if we have connection and sets the label
         loginModel = new LoginModel();
         if (this.loginModel.isDatabaseConnected()) {
             this.dbstatus.setTextFill(Color.GREEN);
@@ -42,6 +43,9 @@ public class LoginController implements Initializable {
 
 
     public void loginMethod(ActionEvent actionEvent) {
+        // Activated once the login button is pressed.
+        // Checks if the entered credentials matches the correct credentials
+        // in our database by calling the isLogin() method from the LoginModel class
         try {
             if (this.divisioncombobox.getValue()!=null) {
                 if (this.loginModel.isLogin(this.usernamefield.getText(), this.passwordfield.getText(), ((option) this.divisioncombobox.getValue()).toString())) {
@@ -68,6 +72,8 @@ public class LoginController implements Initializable {
     }
 
     public void studentLogin() {
+        // This is called when you login using student credentials.
+        // Creates a new window called Student Dashboard but we haven't done anything with it
         try {
             Stage userStage = new Stage();
             FXMLLoader loader = new FXMLLoader();
@@ -88,6 +94,8 @@ public class LoginController implements Initializable {
     }
 
     public void adminLogin() {
+        // Called when you login with admin credentials or if you press the bypass button
+        // -> Go to AdminsController
         try {
             Stage adminStage = new Stage();
             FXMLLoader adminLoader = new FXMLLoader();
@@ -107,22 +115,11 @@ public class LoginController implements Initializable {
     }
 
     public void bypassLogin(ActionEvent actionEvent) {
-        try {
-            Stage stage = (Stage) this.loginbutton.getScene().getWindow();
-            stage.close();
-            Stage adminStage = new Stage();
-            FXMLLoader adminLoader = new FXMLLoader();
-            Pane adminRoot = (Pane) adminLoader.load(getClass().getResource("/admins/admins.fxml").openStream());
-            AdminsController adminsController = (AdminsController) adminLoader.getController();
+        // Called when you press the login button
+        // -> Go to AdminsController
+        Stage stage = (Stage) this.loginbutton.getScene().getWindow();
+        stage.close();
+        adminLogin();
 
-            Scene scene = new Scene(adminRoot);
-            adminStage.setScene(scene);
-            adminStage.setTitle("Admin Dashboard");
-            adminStage.setResizable(false);
-            adminStage.show();
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
     }
 }

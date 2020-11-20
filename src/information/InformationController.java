@@ -2,7 +2,7 @@ package information;
 
 import admins.AdminsController;
 import admins.PortfolioData;
-import admins.StudentData;
+
 import dbUtil.dbConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,16 +34,18 @@ public class InformationController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+            // Shows all information about the selected student
         try {
             Connection conn = dbConnection.getConnection();
             this.portfolioData = FXCollections.observableArrayList();
 
-
+            // The first SQL-query selects all information about the student from the various tables
             String sql = "SELECT G.StudentID, G.StudentName, S.City, G.CourseName, G.CourseSeason, G.Grade FROM Grade G INNER JOIN Course C " +
                     "on G.CourseName = C.Name INNER JOIN Student S on G.StudentID = S.ID WHERE S.ID = " + AdminsController.getIDpass();
 
+            // The seconds SQL-query only selects the average grade from the student
             String sqlAvg= "SELECT AVG(G.Grade) FROM Grade G INNER JOIN Student S on G.StudentID = S.ID WHERE S.ID = " + AdminsController.getIDpass();
+            // Could probably be done using only a single SQL-query, but this works
 
 
             ResultSet rs = conn.createStatement().executeQuery(sql);
@@ -52,9 +54,12 @@ public class InformationController implements Initializable {
             int i = 0;
             while (rs.next()) {
                 if (i == 0) {
+                    // Adds all data to the first row
                     this.portfolioData.add(new PortfolioData(rs.getString(1), rs.getString(2), rs.getString(4) + " " + rs.getString(5), rs.getString(6), rs.getString(3), rs2.getString(1)));
                     i++;
                 } else {
+                    // Only adds course data and grade data to the second row
+                    // since they are the only rows that has different values.
                     this.portfolioData.add(new PortfolioData(null, null, rs.getString(4) + " " + rs.getString(5), rs.getString(6), null, null));
                 }
             }

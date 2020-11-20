@@ -26,6 +26,7 @@ public class LoginModel {
     }
 
     public boolean isLogin(String user, String pass, String opt) throws Exception {
+        // Checks if the credentials matches the credentials in the database
         PreparedStatement pr = null;
         ResultSet rs = null;
         String sql = "SELECT * FROM login where username = ? and password = ? and division = ?";

@@ -12,6 +12,7 @@ public class PortfolioData {
     private final StringProperty avg;
 
     public PortfolioData(String ID, String name, String course, String grade, String city, String avg) {
+        // Data we can add to the tableviews
         this.ID=new SimpleStringProperty(ID);
         this.name=new SimpleStringProperty(name);
         this.course=new SimpleStringProperty(course);
