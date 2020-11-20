@@ -18,7 +18,6 @@ import students.StudentsController;
 
 public class LoginController implements Initializable {
     public Label loginStatus;
-    //LoginModel loginModel = new LoginModel();
     LoginModel loginModel;
     public TextField usernamefield;
     public PasswordField passwordfield;
@@ -44,19 +43,23 @@ public class LoginController implements Initializable {
 
     public void loginMethod(ActionEvent actionEvent) {
         try {
-            if (this.loginModel.isLogin(this.usernamefield.getText(), this.passwordfield.getText(), ((option)this.divisioncombobox.getValue()).toString())) {
-                Stage stage = (Stage) this.loginbutton.getScene().getWindow();
-                stage.close();
-                switch (((option)this.divisioncombobox.getValue()).toString()) {
-                    case "Admin":
-                        adminLogin();
-                        break;
-                    case "Student":
-                        studentLogin();
-                        break;
+            if (this.divisioncombobox.getValue()!=null) {
+                if (this.loginModel.isLogin(this.usernamefield.getText(), this.passwordfield.getText(), ((option) this.divisioncombobox.getValue()).toString())) {
+                    Stage stage = (Stage) this.loginbutton.getScene().getWindow();
+                    stage.close();
+                    switch (((option) this.divisioncombobox.getValue()).toString()) {
+                        case "Admin":
+                            adminLogin();
+                            break;
+                        case "Student":
+                            studentLogin();
+                            break;
+                    }
+                } else {
+                    this.loginStatus.setText("WRONG CREDENTIALS");
                 }
             } else {
-                this.loginStatus.setText("WRONG CREDENTIALS");
+                this.loginStatus.setText("Pick a division");
             }
         } catch (Exception localException) {
             localException.printStackTrace();

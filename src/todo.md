@@ -2,6 +2,6 @@
 -[X] add courses and grades to the students
 -[X] get the average grades for the students and for the courses in general
 -[X] do something with primary and foreign keys (fuck)
--[ ] ER diagram (fuck)
+-[X] ER diagram (fuck)
 -[ ] find out which normal form i'm using
 -[ ] 

@@ -32,9 +32,6 @@ public class InformationController implements Initializable {
     private ObservableList<PortfolioData> portfolioData;
 
 
-
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -46,13 +43,11 @@ public class InformationController implements Initializable {
             String sql = "SELECT G.StudentID, G.StudentName, S.City, G.CourseName, G.CourseSeason, G.Grade FROM Grade G INNER JOIN Course C " +
                     "on G.CourseName = C.Name INNER JOIN Student S on G.StudentID = S.ID WHERE S.ID = " + AdminsController.getIDpass();
 
-            String sql2= "SELECT AVG(G.Grade) FROM Grade G INNER JOIN Student S on G.StudentID = S.ID WHERE S.ID = " + AdminsController.getIDpass();
-
-
+            String sqlAvg= "SELECT AVG(G.Grade) FROM Grade G INNER JOIN Student S on G.StudentID = S.ID WHERE S.ID = " + AdminsController.getIDpass();
 
 
             ResultSet rs = conn.createStatement().executeQuery(sql);
-            ResultSet rs2 = conn.createStatement().executeQuery(sql2);
+            ResultSet rs2 = conn.createStatement().executeQuery(sqlAvg);
 
             int i = 0;
             while (rs.next()) {
